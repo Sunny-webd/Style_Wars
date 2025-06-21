@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Side - Style Wars</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-dark: #0a0a0f;
+      --secondary-dark: #1a1a2e;
+      --accent-purple: #6c5ce7;
+      --accent-cyan: #00cec9;
+      --accent-pink: #fd79a8;
+      --text-primary: #ffffff;
+      --text-secondary: #b2b2c7;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--primary-dark);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(108, 92, 231, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 206, 201, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(253, 121, 168, 0.1) 0%, transparent 50%);
+      animation: backgroundShift 20s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(5deg); }
+    }
+
+    /* Floating color effect on hover */
+    #colorFloat {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .color-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(40px);
+      animation: colorFloat 3s ease-out forwards;
+    }
+
+    .color-orb.purple {
+      background: radial-gradient(circle, rgba(108, 92, 231, 0.4) 0%, rgba(108, 92, 231, 0.1) 50%, transparent 100%);
+    }
+
+    .color-orb.cyan {
+      background: radial-gradient(circle, rgba(0, 206, 201, 0.4) 0%, rgba(0, 206, 201, 0.1) 50%, transparent 100%);
+    }
+
+    .color-orb.pink {
+      background: radial-gradient(circle, rgba(253, 121, 168, 0.4) 0%, rgba(253, 121, 168, 0.1) 50%, transparent 100%);
+    }
+
+    @keyframes colorFloat {
+      0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 0;
+      }
+      20% {
+        transform: scale(0.5) rotate(90deg);
+        opacity: 0.6;
+      }
+      60% {
+        transform: scale(1.2) rotate(180deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(2) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Color trail effect */
+    .color-trail {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(10px);
+      animation: trailFade 1.5s ease-out forwards;
+    }
+
+    @keyframes trailFade {
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(3);
+        opacity: 0;
+      }
+    }
+
+    /* Interactive background waves */
+    .wave-effect {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      border: 2px solid;
+      animation: waveExpand 2s ease-out forwards;
+    }
+
+    .wave-effect.purple {
+      border-color: rgba(108, 92, 231, 0.3);
+    }
+
+    .wave-effect.cyan {
+      border-color: rgba(0, 206, 201, 0.3);
+    }
+
+    .wave-effect.pink {
+      border-color: rgba(253, 121, 168, 0.3);
+    }
+
+    @keyframes waveExpand {
+      0% {
+        width: 20px;
+        height: 20px;
+        opacity: 1;
+      }
+      100% {
+        width: 300px;
+        height: 300px;
+        opacity: 0;
+      }
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1rem 2rem;
+      background: rgba(10, 10, 15, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    nav:hover {
+      background: rgba(10, 10, 15, 0.95);
+    }
+
+    nav > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    nav span {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, var(--accent-purple), var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 30px rgba(108, 92, 231, 0.5);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(108, 92, 231, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    nav a:hover {
+      color: var(--text-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
+    }
+
+    nav a:hover::before {
+      left: 100%;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--accent-purple) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      animation: pulse 4s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+      50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.1; }
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      margin-bottom: 2rem;
+      background: linear-gradient(45deg, var(--text-primary), var(--accent-cyan), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 50px rgba(108, 92, 231, 0.5); }
+      to { text-shadow: 0 0 80px rgba(0, 206, 201, 0.8); }
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      max-width: 600px;
+      margin-bottom: 3rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 1rem 2rem;
+      margin: 0 1rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, var(--accent-purple), var(--accent-cyan));
+      color: white;
+      box-shadow: 0 10px 30px rgba(108, 92, 231, 0.4);
+    }
+
+    .btn-secondary {
+      background: var(--glass-bg);
+      color: var(--text-primary);
+      border: 2px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(108, 92, 231, 0.6);
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    /* Sections */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      background: linear-gradient(45deg, var(--accent-purple), var(--accent-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    h3 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent-cyan);
+    }
+
+    h4 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: var(--accent-purple);
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    /* Strengths Grid */
+    .strengths-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 3rem;
+      margin-top: 4rem;
+    }
+
+    .strength-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      backdrop-filter: blur(20px);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .strength-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan), var(--accent-pink));
+      transform: scaleX(0);
+      transition: transform 0.5s ease;
+    }
+
+    .strength-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 30px 60px rgba(108, 92, 231, 0.3);
+      border-color: var(--accent-purple);
+    }
+
+    .strength-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    /* Call to Action */
+    .cta {
+      background: linear-gradient(135deg, var(--secondary-dark), var(--primary-dark));
+      border-radius: 30px;
+      padding: 4rem;
+      text-align: center;
+      margin: 4rem 0;
+      border: 1px solid var(--glass-border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, var(--accent-purple), transparent);
+      animation: rotate 10s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .cta ul {
+      list-style: none;
+      margin: 2rem 0;
+      text-align: left;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta li {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--glass-border);
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .cta li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent-cyan);
+      font-weight: bold;
+      transition: transform 0.3s ease;
+    }
+
+    .cta li:hover::before {
+      transform: translateX(5px);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--secondary-dark);
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--glass-border);
+      margin-top: 4rem;
+    }
+
+    footer h3 {
+      margin-bottom: 1rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      nav ul {
+        gap: 1rem;
+      }
+
+      nav a {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+      }
+
+      .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        margin: 0.5rem;
+      }
+
+      section {
+        padding: 4rem 1rem;
+      }
+
+      h2 {
+        font-size: 2.2rem;
+      }
+
+      .strengths-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .strength-card {
+        padding: 2rem;
+      }
+
+      .cta {
+        padding: 2.5rem 1.5rem;
+        margin: 2rem 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav {
+        padding: 1rem;
+      }
+
+      nav span {
+        font-size: 1.5rem;
+      }
+
+      nav ul {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .btn {
+        width: calc(100% - 2rem);
+        margin: 0.5rem 1rem;
+      }
+    }
+
+    /* Scroll animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--primary-dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(45deg, var(--accent-purple), var(--accent-cyan));
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(45deg, var(--accent-cyan), var(--accent-pink));
+    }
+
+    /* Web Collection Game */
+    .web-collector {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 15px;
+      padding: 1rem 1.5rem;
+      z-index: 1001;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .web-collector:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
+    }
+
+    .web-score {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .web-icon {
+      width: 20px;
+      height: 20px;
+      opacity: 0.8;
+    }
+
+    .floating-web {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      pointer-events: auto;
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s ease;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-web:hover {
+      transform: scale(1.2) rotate(10deg);
+      filter: drop-shadow(0 0 20px var(--accent-purple));
+    }
+
+    .floating-web svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 10px rgba(108, 92, 231, 0.5));
+    }
+
+    @keyframes float {
+      0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+        opacity: 0.7;
+      }
+      25% { 
+        transform: translateY(-20px) rotate(90deg); 
+        opacity: 1;
+      }
+      50% { 
+        transform: translateY(-10px) rotate(180deg); 
+        opacity: 0.8;
+      }
+      75% { 
+        transform: translateY(-30px) rotate(270deg); 
+        opacity: 1;
+      }
+    }
+
+    .web-collect-animation {
+      animation: collectWeb 0.8s ease-out forwards;
+    }
+
+    @keyframes collectWeb {
+      0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.5) rotate(180deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(0) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .score-popup {
+      position: fixed;
+      color: var(--accent-cyan);
+      font-weight: bold;
+      font-size: 1.5rem;
+      pointer-events: none;
+      z-index: 1002;
+      animation: scorePopup 1.5s ease-out forwards;
+    }
+
+    @keyframes scorePopup {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    .web-spawn-effect {
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      border: 2px solid var(--accent-purple);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99;
+      animation: spawnEffect 1s ease-out forwards;
+    }
+
+    @keyframes spawnEffect {
+      0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.2) rotate(180deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(1.5) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Responsive adjustments for web collector */
+    @media (max-width: 768px) {
+      .web-collector {
+        top: 15px;
+        right: 15px;
+        padding: 0.8rem 1.2rem;
+      }
+
+      .web-score {
+        font-size: 1rem;
+      }
+
+      .floating-web {
+        width: 35px;
+        height: 35px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Web Collector UI -->
+  <div class="web-collector" id="webCollector">
+    <div class="web-score">
+      <svg class="web-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7v10c0 5.55 3.84 10 9 11 1.16.21 2.84.21 4 0 5.16-1 9-5.45 9-11V7l-10-5z"/>
+        <path d="M8 11L12 15L20 7"/>
+      </svg>
+      <span id="webCount">0</span>
+    </div>
+  </div>
+
+  <!-- Color floating effect container -->
+  <div id="colorFloat"></div>
+
+  <!-- Navbar -->
+  <nav>
+    <div>
+      <span>Dark Side</span>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">Rules</a></li>
+        <li><a href="#strengths">Join the Shadows</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <h1>Embrace the Dark Side</h1>
+    <p>
+      Step into a world of elegance and depth. The Dark Side values bold, immersive design that captivates and intrigues every visitor.
+    </p>
+    <div>
+      <button class="btn btn-primary">Join the Dark</button>
+      <button class="btn btn-secondary">Learn More</button>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="fade-in">
+    <h2>About the Dark Side</h2>
+    <p>
+      The Dark Side is for those who appreciate sophistication, contrast, and the power of mystery in web design. Our members craft experiences that draw users in and encourage exploration.
+    </p>
+    <p>
+      We focus on rich visuals, layered content, and dramatic layouts that make every page memorable. The Dark Side's philosophy is to use contrast and depth to create intrigue, guiding users through a journey of discovery.
+    </p>
+    <h3>Our Vision</h3>
+    <p>
+      We believe that the web should be immersive and visually striking. By embracing darkness, we highlight what matters and create an atmosphere that is both modern and timeless.
+    </p>
+    <p>
+      The Dark Side community welcomes all who are bold enough to experiment and redefine what is possible in digital experiences.
+    </p>
+  </section>
+
+  <!-- Strengths Section -->
+  <section id="strengths">
+    <h2>Our Strengths</h2>
+    <div class="strengths-grid">
+      <div class="strength-card">
+        <h3>Elegance</h3>
+        <h4>Refined Aesthetics</h4>
+        <p>
+          Minimalist elements and careful alignment create a sense of luxury and professionalism. Every detail is intentional, from the use of space to the choice of color accents.
+        </p>
+        <h4>Contrast and Focus</h4>
+        <p>
+          Strong contrasts guide the user's attention, making key content stand out and enhancing readability. We use shadows, overlays, and gradients to add richness and dimension.
+        </p>
+        <p>
+          Elegance means restraint—knowing when to let content breathe and when to make a statement.
+        </p>
+        <button class="btn btn-primary">Explore Elegance</button>
+      </div>
+      <div class="strength-card">
+        <h3>Depth</h3>
+        <h4>Layered Design</h4>
+        <p>
+          The Dark Side leverages depth through visual hierarchy, subtle animations, and interactive cues. Our interfaces feel immersive, drawing users into the experience.
+        </p>
+        <h4>Dynamic Interactions</h4>
+        <p>
+          Interactive elements and transitions create a sense of movement and intrigue, encouraging users to explore further. We use parallax, overlays, and modal windows to add complexity and engagement.
+        </p>
+        <p>
+          Depth is not just visual—it's about creating a journey that unfolds as users interact with the site.
+        </p>
+        <button class="btn btn-primary">Discover Depth</button>
+      </div>
+      <div class="strength-card">
+        <h3>Mystery</h3>
+        <h4>Intriguing Content</h4>
+        <p>
+          Information is revealed thoughtfully, inviting curiosity and rewarding exploration with new discoveries. We use unconventional layouts and hidden details to surprise and delight users.
+        </p>
+        <h4>Memorable Experiences</h4>
+        <p>
+          Unique layouts and creative visuals ensure that every visit to a Dark Side site is unforgettable. We believe that mystery is a powerful tool for engagement and retention.
+        </p>
+        <p>
+          The Dark Side thrives on creativity, experimentation, and the thrill of the unknown.
+        </p>
+        <button class="btn btn-primary">Get Inspired</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="cta">
+    <h2>Ready to Make an Impact?</h2>
+    <p>
+      Join the Dark Side and redefine what's possible in web design. Stand out, captivate, and inspire. Take part in our events, contribute to our gallery, or connect with fellow designers to share your story.
+    </p>
+    <ul>
+      <li>Register for exclusive Dark Side workshops and tutorials.</li>
+      <li>Browse our showcase of cutting-edge, dark-themed designs.</li>
+      <li>Engage with the community in our discussion forums.</li>
+    </ul>
+    <div>
+      <button class="btn btn-primary">Sign Up Now</button>
+      <button class="btn btn-secondary">See Our Showcase</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <h3>Contact the Dark Side Team</h3>
+    <p>
+      Email: dark@stylewars.com<br>
+      Follow us for news, tips, and inspiration.
+    </p>
+    <p>
+      &copy; 2025 Dark Side. All rights reserved.
+    </p>
+  </footer>
+
+  <script>
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Navbar background on scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 100) {
+        nav.style.background = 'rgba(10, 10, 15, 0.95)';
+      } else {
+        nav.style.background = 'rgba(10, 10, 15, 0.8)';
+      }
+    });
+
+    // Add fade-in animation to elements on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections except hero
+    document.querySelectorAll('section:not(.hero)').forEach(section => {
+      observer.observe(section);
+    });
+
+    // Parallax effect for hero background
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero');
+      const parallax = scrolled * 0.5;
+      hero.style.transform = `translateY(${parallax}px)`;
+    });
+
+    // Button click effects
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        // Create ripple effect
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.animation = 'ripple 0.6s linear';
+        ripple.style.pointerEvents = 'none';
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
+      });
+    });
+
+    // Add ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Web Collection Game
+    class WebCollector {
+      constructor() {
+        this.score = 0;
+        this.webs = [];
+        this.spawnRate = 3000; // milliseconds
+        this.maxWebs = 8;
+        this.init();
+      }
+
+      init() {
+        this.updateScore();
+        this.startSpawning();
+        
+        // Add click handler to collector UI for info
+        document.getElementById('webCollector').addEventListener('click', () => {
+          this.showInfo();
+        });
+      }
+
+      createWeb() {
+        if (this.webs.length >= this.maxWebs) return;
+
+        const web = document.createElement('div');
+        web.className = 'floating-web';
+        
+        // Random position
+        const x = Math.random() * (window.innerWidth - 40);
+        const y = Math.random() * (window.innerHeight - 40);
+        
+        web.style.left = x + 'px';
+        web.style.top = y + 'px';
+
+        // Add SVG web icon
+        web.innerHTML = `
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="webGradient${Date.now()}" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#6c5ce7;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#00cec9;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#fd79a8;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            
+            <!-- Web structure -->
+            <circle cx="50" cy="50" r="35" fill="none" stroke="url(#webGradient${Date.now()})" stroke-width="1.5" opacity="0.6"/>
+            <circle cx="50" cy="50" r="25" fill="none" stroke="url(#webGradient${Date.now()})" stroke-width="1.5" opacity="0.6"/>
+            <circle cx="50" cy="50" r="15" fill="none" stroke="url(#webGradient${Date.now()})" stroke-width="1.5" opacity="0.6"/>
+            
+            <!-- Radial lines -->
+            <line x1="50" y1="15" x2="50" y2="85" stroke="url(#webGradient${Date.now()})" stroke-width="1.5" opacity="0.6"/>
+            <line x1="15" y1="50" x2="85" y2="50" stroke="url(#webGradient${Date.now()})" stroke-width="1.5" opacity="0.6"/>
+            <line x1="25" y1="25" x2="75" y2="75" stroke="url(#webGradient${Date.now()})" stroke-width="1.5" opacity="0.6"/>
+            <line x1="75" y1="25" x2="25" y2="75" stroke="url(#webGradient${Date.now()})" stroke-width="1.5" opacity="0.6"/>
+            
+            <!-- Spider (optional small dot) -->
+            <circle cx="50" cy="50" r="2" fill="url(#webGradient${Date.now()})" opacity="0.8"/>
+          </svg>
+        `;
+
+        // Add click handler
+        web.addEventListener('click', (e) => {
+          this.collectWeb(web, e);
+        });
+
+        // Add spawn effect
+        this.createSpawnEffect(x + 20, y + 20);
+
+        document.body.appendChild(web);
+        this.webs.push(web);
+
+        // Auto-remove after 15 seconds if not collected
+        setTimeout(() => {
+          if (web.parentNode) {
+            this.removeWeb(web);
+          }
+        }, 15000);
+      }
+
+      collectWeb(web, event) {
+        // Prevent multiple clicks
+        if (web.classList.contains('web-collect-animation')) return;
+
+        this.score += 10;
+        this.updateScore();
+        
+        // Show score popup
+        this.showScorePopup(event.clientX, event.clientY, '+10');
+        
+        // Play collect animation
+        web.classList.add('web-collect-animation');
+        
+        // Remove from array and DOM
+        setTimeout(() => {
+          this.removeWeb(web);
+        }, 800);
+
+        // Increase spawn rate slightly
+        if (this.spawnRate > 1500) {
+          this.spawnRate -= 50;
+        }
+      }
+
+      removeWeb(web) {
+        const index = this.webs.indexOf(web);
+        if (index > -1) {
+          this.webs.splice(index, 1);
+        }
+        if (web.parentNode) {
+          web.parentNode.removeChild(web);
+        }
+      }
+
+      createSpawnEffect(x, y) {
+        const effect = document.createElement('div');
+        effect.className = 'web-spawn-effect';
+        effect.style.left = (x - 30) + 'px';
+        effect.style.top = (y - 30) + 'px';
+        
+        document.body.appendChild(effect);
+        
+        setTimeout(() => {
+          if (effect.parentNode) {
+            effect.parentNode.removeChild(effect);
+          }
+        }, 1000);
+      }
+
+      showScorePopup(x, y, text) {
+        const popup = document.createElement('div');
+        popup.className = 'score-popup';
+        popup.textContent = text;
+        popup.style.left = x + 'px';
+        popup.style.top = y + 'px';
+        
+        document.body.appendChild(popup);
+        
+        setTimeout(() => {
+          if (popup.parentNode) {
+            popup.parentNode.removeChild(popup);
+          }
+        }, 1500);
+      }
+
+      showInfo() {
+        this.showScorePopup(
+          window.innerWidth - 200, 
+          80, 
+          'Click webs to collect!'
+        );
+      }
+
+      updateScore() {
+        document.getElementById('webCount').textContent = this.score;
+      }
+
+      startSpawning() {
+        const spawn = () => {
+          this.createWeb();
+          setTimeout(spawn, this.spawnRate + Math.random() * 2000);
+        };
+        
+        // Initial delay
+        setTimeout(spawn, 2000);
+      }
+    }
+
+    // Initialize the web collection game
+    const webGame = new WebCollector();
+
+    // Add keyboard shortcut (space) to manually spawn a web for testing
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' && e.ctrlKey) {
+        e.preventDefault();
+        webGame.createWeb();
+      }
+    });
+
+    // Color floating effect on hover
+    class ColorFloatEffect {
+      constructor() {
+        this.colorFloat = document.getElementById('colorFloat');
+        this.colors = ['purple', 'cyan', 'pink'];
+        this.isActive = false;
+        this.trails = [];
+        this.init();
+      }
+
+      init() {
+        let mouseTimeout;
+        
+        document.addEventListener('mousemove', (e) => {
+          this.isActive = true;
+          this.colorFloat.style.opacity = '1';
+          
+          // Clear existing timeout
+          clearTimeout(mouseTimeout);
+          
+          // Create floating color orb
+          this.createColorOrb(e.clientX, e.clientY);
+          
+          // Create color trail
+          this.createColorTrail(e.clientX, e.clientY);
+          
+          // Create wave effect occasionally
+          if (Math.random() < 0.1) {
+            this.createWaveEffect(e.clientX, e.clientY);
+          }
+          
+          // Hide effect when mouse stops moving
+          mouseTimeout = setTimeout(() => {
+            this.isActive = false;
+            this.colorFloat.style.opacity = '0';
+          }, 500);
+        });
+
+        // Hide effect when mouse leaves window
+        document.addEventListener('mouseleave', () => {
+          this.isActive = false;
+          this.colorFloat.style.opacity = '0';
+        });
+      }
+
+      createColorOrb(x, y) {
+        const orb = document.createElement('div');
+        const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+        const size = Math.random() * 100 + 50; // 50-150px
+        
+        orb.className = `color-orb ${color}`;
+        orb.style.left = (x - size/2) + 'px';
+        orb.style.top = (y - size/2) + 'px';
+        orb.style.width = size + 'px';
+        orb.style.height = size + 'px';
+        
+        // Add slight random offset for more organic movement
+        const offsetX = (Math.random() - 0.5) * 100;
+        const offsetY = (Math.random() - 0.5) * 100;
+        orb.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        
+        this.colorFloat.appendChild(orb);
+        
+        // Remove after animation
+        setTimeout(() => {
+          if (orb.parentNode) {
+            orb.parentNode.removeChild(orb);
+          }
+        }, 3000);
+      }
+
+      createColorTrail(x, y) {
+        const trail = document.createElement('div');
+        const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+        
+        trail.className = 'color-trail';
+        trail.style.left = (x - 10) + 'px';
+        trail.style.top = (y - 10) + 'px';
+        
+        // Set color based on type
+        switch(color) {
+          case 'purple':
+            trail.style.background = 'radial-gradient(circle, rgba(108, 92, 231, 0.6) 0%, transparent 70%)';
+            break;
+          case 'cyan':
+            trail.style.background = 'radial-gradient(circle, rgba(0, 206, 201, 0.6) 0%, transparent 70%)';
+            break;
+          case 'pink':
+            trail.style.background = 'radial-gradient(circle, rgba(253, 121, 168, 0.6) 0%, transparent 70%)';
+            break;
+        }
+        
+        this.colorFloat.appendChild(trail);
+        
+        // Store reference for cleanup
+        this.trails.push(trail);
+        
+        // Remove after animation
+        setTimeout(() => {
+          if (trail.parentNode) {
+            trail.parentNode.removeChild(trail);
+          }
+          const index = this.trails.indexOf(trail);
+          if (index > -1) {
+            this.trails.splice(index, 1);
+          }
+        }, 1500);
+      }
+
+      createWaveEffect(x, y) {
+        const wave = document.createElement('div');
+        const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+        
+        wave.className = `wave-effect ${color}`;
+        wave.style.left = (x - 10) + 'px';
+        wave.style.top = (y - 10) + 'px';
+        
+        this.colorFloat.appendChild(wave);
+        
+        // Remove after animation
+        setTimeout(() => {
+          if (wave.parentNode) {
+            wave.parentNode.removeChild(wave);
+          }
+        }, 2000);
+      }
+
+      // Method to create burst effect on click
+      createClickBurst(x, y) {
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            this.createColorOrb(
+              x + (Math.random() - 0.5) * 200,
+              y + (Math.random() - 0.5) * 200
+            );
+          }, i * 100);
+        }
+        
+        // Create multiple waves
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => {
+            this.createWaveEffect(x, y);
+          }, i * 200);
+        }
+      }
+    }
+
+    // Initialize color floating effect
+    const colorEffect = new ColorFloatEffect();
+
+    // Add click burst effect
+    document.addEventListener('click', (e) => {
+      // Don't trigger on UI elements
+      if (!e.target.closest('nav') && !e.target.closest('.btn') && !e.target.closest('.web-collector') && !e.target.closest('.floating-web')) {
+        colorEffect.createClickBurst(e.clientX, e.clientY);
+      }
+    });
+
+    // Enhanced hover effects for sections
+    document.querySelectorAll('section').forEach(section => {
+      section.addEventListener('mouseenter', (e) => {
+        // Create gentle color wash on section entry
+        const rect = section.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => {
+            colorEffect.createColorOrb(
+              centerX + (Math.random() - 0.5) * rect.width,
+              centerY + (Math.random() - 0.5) * rect.height
+            );
+          }, i * 200);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
